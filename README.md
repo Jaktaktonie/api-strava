@@ -1,19 +1,17 @@
-# MiniStrava
+# MiniStrava API
 
-System do rejestrowania i analizy aktywności fizycznych. Zakres:
-- aplikacja mobilna Flutter/Dart (Android/iOS, PL/EN),
-- panel administracyjny web,
-- backend REST API (Laravel, MySQL, Swagger).
+Backend REST API projektu MiniStrava odpowiedzialny za:
+- obsługę kont użytkowników (rejestracja, logowanie, reset hasła, profile),
+- zapis i analizę aktywności wraz z danymi GPS, zdjęciami, komentarzami i polubieniami,
+- zarządzanie relacjami społecznymi (znajomi, blokady, zgłoszenia nadużyć),
+- dostarczenie statystyk użytkownika oraz rankingów,
+- panel administracyjny (autoryzacja, statystyki globalne, moderacja treści),
+- dokumentację OpenAPI/Swagger i eksporty GPX.
 
-## Kamienie milowe backendu
-1. Inicjalizacja repo i środowiska (`git init`, opis projektu, `.gitignore`).
-2. Stworzenie szkieletu Laravel + konfiguracja `.env` i bazy.
-3. Moduł uwierzytelniania (rejestracja, logowanie, reset hasła, profile).
-4. Obsługa aktywności + feed, statystyki, relacje społeczne.
-5. Endpointy panelu admina oraz dokumentacja OpenAPI.
-6. Dane przykładowe oraz integracje powiadomień (mail, push).
+Technologie docelowe:
+- Laravel + PHP 8.2,
+- MySQL (hosting hostido),
+- Redis (cache/kolejki),
+- Swagger (darkaonline/l5-swagger) dla `/api/documentation`.
 
-## Notatki organizacyjne
-- Baza danych: MySQL (hosting hostido).
-- Maile: SMTP Gmail (hasło aplikacyjne).
-- Pierwsze commity prowadzone iteracyjnie, tak aby łatwo śledzić postęp.
+Repo zawiera tylko warstwę API; aplikacja mobilna i panel webowy będą pracować na tych endpointach. Dalsze instrukcje uruchomienia zostaną dodane po skonfigurowaniu środowiska.
