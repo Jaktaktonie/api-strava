@@ -6,6 +6,7 @@ use App\Http\Requests\Profile\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
+class ProfileController extends Controller
 {
     public function show(Request $request): UserResource
     {
