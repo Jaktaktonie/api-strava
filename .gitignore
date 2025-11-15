@@ -1,0 +1,45 @@
+# Environment & secrets
+.env
+.env.*
+*.key
+
+# Laravel
+/vendor/
+/node_modules/
+/public/storage
+/storage/*.key
+/storage/framework/*
+/storage/logs/*
+/bootstrap/cache/*
+!.gitignore
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Flutter / mobile
+**/build/
+.dart_tool/
+.packages
+flutter_export_environment.sh
+.flutter-plugins
+.flutter-plugins-dependencies
+android/.gradle/
+android/app/debug
+android/app/profile
+android/app/release
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/.symlinks/
+ios/Pods/
+macos/Flutter/GeneratedPluginRegistrant.swift
+web/.dart_tool/
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+Thumbs.db
+Desktop.ini
