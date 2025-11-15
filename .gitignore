@@ -23,10 +23,14 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
+/database/*.sqlite
+/database/*.sqlite3
+
 /bootstrap/cache/*
 /storage/framework/*
 
 
 .env.*
+!.env.example
 *.key
 
