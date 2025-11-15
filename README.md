@@ -1,17 +1,5 @@
-# MiniStrava API
-
-Backend REST API projektu MiniStrava odpowiedzialny za:
-- obsługę kont użytkowników (rejestracja, logowanie, reset hasła, profile),
-- zapis i analizę aktywności wraz z danymi GPS, zdjęciami, komentarzami i polubieniami,
-- zarządzanie relacjami społecznymi (znajomi, blokady, zgłoszenia nadużyć),
-- dostarczenie statystyk użytkownika oraz rankingów,
-- panel administracyjny (autoryzacja, statystyki globalne, moderacja treści),
-- dokumentację OpenAPI/Swagger i eksporty GPX.
-
-Technologie docelowe:
-- Laravel + PHP 8.2,
-- MySQL (hosting hostido),
-- Redis (cache/kolejki),
-- Swagger (darkaonline/l5-swagger) dla `/api/documentation`.
-
-Repo zawiera tylko warstwę API; aplikacja mobilna i panel webowy będą pracować na tych endpointach. Dalsze instrukcje uruchomienia zostaną dodane po skonfigurowaniu środowiska.
+Wymagania dotyczące API i backendu
+- Backend udostępnia REST API zgodne ze specyfikacją OpenAPI 3.0.
+- Dokumentacja API dostępna jest pod endpointem /api/documentation
+(OpenAPI/Swagger).
+- API umożliwia eksport aktywności do pliku .gpx.
