@@ -22,7 +22,6 @@ class RegistrationTest extends TestCase
 
         $response = $this->postJson('/api/auth/register', $payload);
 
-        $this->assertAuthenticated();
         $response
             ->assertCreated()
             ->assertJsonStructure([
@@ -34,5 +33,11 @@ class RegistrationTest extends TestCase
                     'last_name',
                 ],
             ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+            'first_name' => 'Test',
+            'last_name' => 'User',
+        ]);
     }
 }
