@@ -18,6 +18,16 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/app/public/*
+!/storage/app/public/.gitignore
+storage/framework/*
+!storage/framework/.gitignore
+!storage/framework/cache/.gitignore
+!storage/framework/sessions/.gitignore
+!storage/framework/testing/.gitignore
+!storage/framework/views/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
 /vendor
 Homestead.json
 Homestead.yaml
@@ -27,8 +37,7 @@ Thumbs.db
 /database/*.sqlite3
 
 /bootstrap/cache/*
-/storage/framework/*
-
+!/bootstrap/cache/.gitignore
 .env.*
 !.env.example
 *.key
