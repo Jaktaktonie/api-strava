@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('locale', 5)->default('pl');
             $table->string('timezone', 60)->default('Europe/Warsaw');
             $table->string('email')->unique();
+            $table->string('role', 20)->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -38,6 +38,7 @@ class UserFactory extends Factory
             'bio' => fake()->sentence(12),
             'locale' => fake()->randomElement(['pl', 'en']),
             'timezone' => fake()->timezone(),
+            'role' => 'user',
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
