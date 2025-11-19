@@ -33,8 +33,8 @@ class AuthDocumentation
      *             @OA\Property(property="email", type="string", format="email", example="jan@example.com"),
      *             @OA\Property(property="password", type="string", format="password", example="Pass123!"),
      *             @OA\Property(property="password_confirmation", type="string", format="password", example="Pass123!"),
-     *             @OA\Property(property="locale", type="string", example="pl"),
-     *             @OA\Property(property="timezone", type="string", example="Europe/Warsaw")
+ *             @OA\Property(property="locale", type="string", example="pl", description="Preferred language for mails and messages (pl/en)"),
+ *             @OA\Property(property="timezone", type="string", example="Europe/Warsaw", description="IANA timezone used when aggregating workouts and notifications")
      *         )
      *     ),
      *     @OA\Response(
@@ -166,8 +166,8 @@ class AuthDocumentation
      *             @OA\Property(property="weight_kg", type="integer"),
      *             @OA\Property(property="avatar_url", type="string"),
      *             @OA\Property(property="bio", type="string"),
-     *             @OA\Property(property="locale", type="string", example="pl"),
-     *             @OA\Property(property="timezone", type="string", example="Europe/Warsaw")
+ *             @OA\Property(property="locale", type="string", example="pl", description="Preferred language for mails and UI copy"),
+ *             @OA\Property(property="timezone", type="string", example="Europe/Warsaw", description="User timezone for aggregating workouts")
      *         )
      *     ),
      *     @OA\Response(
@@ -197,8 +197,8 @@ class AuthDocumentation
  *     @OA\Property(property="weight_kg", type="integer", nullable=true),
  *     @OA\Property(property="avatar_url", type="string", nullable=true),
  *     @OA\Property(property="bio", type="string", nullable=true),
- *     @OA\Property(property="locale", type="string"),
- *     @OA\Property(property="timezone", type="string"),
+ *     @OA\Property(property="locale", type="string", description="UI/messaging language preference"),
+ *     @OA\Property(property="timezone", type="string", description="Timezone used for activity summaries"),
  *     @OA\Property(property="email_verified_at", type="string", format="date-time", nullable=true),
  *     @OA\Property(property="created_at", type="string", format="date-time", nullable=true),
  *     @OA\Property(property="updated_at", type="string", format="date-time", nullable=true)

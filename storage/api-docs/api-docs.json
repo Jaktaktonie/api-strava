@@ -56,10 +56,12 @@
                                         "example": "Pass123!"
                                     },
                                     "locale": {
+                                        "description": "Preferred language for mails and messages (pl/en)",
                                         "type": "string",
                                         "example": "pl"
                                     },
                                     "timezone": {
+                                        "description": "IANA timezone used when aggregating workouts and notifications",
                                         "type": "string",
                                         "example": "Europe/Warsaw"
                                     }
@@ -311,10 +313,12 @@
                                         "type": "string"
                                     },
                                     "locale": {
+                                        "description": "Preferred language for mails and UI copy",
                                         "type": "string",
                                         "example": "pl"
                                     },
                                     "timezone": {
+                                        "description": "User timezone for aggregating workouts",
                                         "type": "string",
                                         "example": "Europe/Warsaw"
                                     }
@@ -389,9 +393,11 @@
                         "nullable": true
                     },
                     "locale": {
+                        "description": "UI/messaging language preference",
                         "type": "string"
                     },
                     "timezone": {
+                        "description": "Timezone used for activity summaries",
                         "type": "string"
                     },
                     "email_verified_at": {
