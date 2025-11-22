@@ -19,6 +19,7 @@ Backend serwujący dane dla aplikacji mobilnej Flutter oraz panelu administracyj
 ## Konta testowe (można nadpisać w `.env`)
 - Admin: `admin@ministrava.dev / Admin123!` – rola `admin`, do logowania w panelu.
 - Użytkownik: `tester@ministrava.dev / User123!` – zwykłe konto do testów mobilki.
+- Seeder dorzuca też trzech dodatkowych użytkowników z kilkoma przykładowymi aktywnościami, żeby feed/testy miały realne dane.
 
 ## Endpointy dostępne obecnie (`/api`)
 - `POST /auth/register` – tworzy nowe konto.
@@ -29,15 +30,20 @@ Backend serwujący dane dla aplikacji mobilnej Flutter oraz panelu administracyj
 - `GET /profile` – zwraca profil zalogowanego użytkownika.
 - `PUT /profile` – aktualizuje dane profilu (personalne + parametry treningowe).
 - `GET /me` – skrócony endpoint zwracający `UserResource` dla zalogowanego.
+- `GET /activities` – lista własnych aktywności (filtrowanie po typie, dacie, sortowanie po starcie).
+- `POST /activities` – zapisanie nowej aktywności z metrykami i śladem GPS.
+- `GET /activities/{id}` – szczegóły aktywności (dane liczbowe, notatka, zdjęcia, ślad).
+- `PUT /activities/{id}` – edycja aktywności (tytuł, parametry, notatki).
+- `DELETE /activities/{id}` – usunięcie aktywności użytkownika.
 
 Pełna specyfikacja znajduje się w Swaggerze pod `/api/documentation` (UI korzysta z hosta ustawionego w `L5_SWAGGER_CONST_HOST`).
 
 ## Testy
-`php artisan test` – weryfikuje scenariusze rejestracji, logowania, resetu hasła oraz endpointy Breeze/Profilu. Wszystkie obecne testy przechodzą na czystej bazie po seederze.
+`php artisan test` – pokrywa rejestrację/logowanie/reset hasła, profil oraz cały CRUD aktywności. Wszystkie testy przechodzą na czystej bazie po seederze.
 
 ## Roadmapa / następne kroki
-- Definicja aktywności (tabele, metryki, ślad GPS) wraz z CRUD/API i eksportem `.gpx`.
-- Seed z co najmniej pięcioma użytkownikami i przykładowymi aktywnościami wymaganymi w specyfikacji.
+- Eksport aktywności do `.gpx` + przechowywanie plików/zdjęć w storage/S3.
 - Endpointy “admin only” (lista aktywności/users, filtrowanie, usuwanie, statystyki globalne) używane przez panel www.
 - Moduł społecznościowy: znajomi, zaproszenia, blokady, kudosy, komentarze, feed plus powiadomienia push.
+- Ranking/zbiorcze statystyki użytkownika (tydzień/miesiąc) na podstawie nowego modułu aktywności.
 - Lokalizacje UI (`locale`, `timezone`) już są – w przyszłych etapach można dodać powiązane komunikaty/maile.
