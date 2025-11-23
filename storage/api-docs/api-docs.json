@@ -859,6 +859,329 @@
                     }
                 ]
             }
+        },
+        "/api/friends/invite": {
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Send friend invite",
+                "operationId": "cffa2ba441c7dbaa73d59e8165ee72a3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Invite sent"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/friends/{id}/accept": {
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Accept friend invite",
+                "operationId": "c9de1c2130647806312a8ddfc35ab26c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Accepted"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/friends/{id}/reject": {
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Reject friend invite",
+                "operationId": "bb3a01d5eaba1fa38307d0e73af619e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rejected"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/friends": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "List friends",
+                "operationId": "29d28e0b482bc88d68885ba79027aefe",
+                "responses": {
+                    "200": {
+                        "description": "Friends list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/friends/requests": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "List incoming and outgoing requests",
+                "operationId": "897b4172e00732242a231604ca2e135c",
+                "responses": {
+                    "200": {
+                        "description": "Requests"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/feed": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Feed with friends activities",
+                "operationId": "f17f50cd8abafddff421490d0f7dee74",
+                "responses": {
+                    "200": {
+                        "description": "Feed entries",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/FeedActivity"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/activities/{id}/kudos": {
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Give kudos to activity",
+                "operationId": "0e2886957da2f80c7dc376fad7775a6d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Kudos added"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Remove kudos",
+                "operationId": "72d70296a8cc52b767e84578cf01866a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Kudos removed"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/activities/{id}/comments": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "List comments for activity",
+                "operationId": "afc1d3561f22c0d40f9a7dd86eaaabd8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Comment"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Add comment to activity",
+                "operationId": "b66726b74c151b4c27f718384ef5a08e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Świetny bieg!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comment added"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1134,6 +1457,74 @@
                     }
                 },
                 "type": "object"
+            },
+            "FeedActivity": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResource"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "distance_km": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "duration_seconds": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "photo_url": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "kudos_count": {
+                        "type": "integer"
+                    },
+                    "comments_count": {
+                        "type": "integer"
+                    },
+                    "liked_by_me": {
+                        "type": "boolean"
+                    },
+                    "latest_comments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Comment"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Comment": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResource"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -1153,6 +1544,10 @@
         {
             "name": "Profile",
             "description": "Profile"
+        },
+        {
+            "name": "Social",
+            "description": "Social"
         }
     ]
 }

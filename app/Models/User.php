@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Activity;
+use App\Models\ActivityComment;
+use App\Models\FriendRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -64,5 +68,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function friendRequestsSent(): HasMany
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+
+    public function friendRequestsReceived(): HasMany
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+    }
+
+    public function likedActivities(): BelongsToMany
+    {
+        return $this->belongsToMany(Activity::class, 'activity_likes');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(ActivityComment::class);
     }
 }
