@@ -218,6 +218,41 @@
                 ]
             }
         },
+        "/api/activities/{id}/export.gpx": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Export activity route as GPX",
+                "operationId": "0957f5e4aef68c867ea7751cec23762e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GPX file",
+                        "content": {
+                            "application/gpx+xml": {}
+                        }
+                    },
+                    "404": {
+                        "description": "No route to export"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/admin/users": {
             "get": {
                 "tags": [

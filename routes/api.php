@@ -19,6 +19,8 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
 
     Route::apiResource('activities', ActivityController::class);
 
+    Route::get('/activities/{activity}/export.gpx', [ActivityController::class, 'export']);
+
     Route::get('/me', function (Request $request) {
         return new UserResource($request->user());
     });

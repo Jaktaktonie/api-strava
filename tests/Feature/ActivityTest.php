@@ -75,4 +75,24 @@ class ActivityTest extends TestCase
         $this->getJson("/api/activities/{$foreignActivity->id}")
             ->assertForbidden();
     }
+
+    public function test_user_can_export_gpx(): void
+    {
+        Sanctum::actingAs($user = User::factory()->create());
+
+        $activity = Activity::factory()->create([
+            'user_id' => $user->id,
+            'start_time' => Carbon::now(),
+            'route' => [
+                ['lat' => 52.1, 'lng' => 21.0],
+                ['lat' => 52.2, 'lng' => 21.1],
+            ],
+        ]);
+
+        $this->get("/api/activities/{$activity->id}/export.gpx")
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/gpx+xml')
+            ->assertSee('<gpx', false)
+            ->assertSee('52.1', false);
+    }
 }

@@ -71,8 +71,60 @@ class ActivityController extends Controller
         return response()->noContent();
     }
 
+    public function export(Request $request, Activity $activity)
+    {
+        $this->authorizeOwnership($request->user()->id, $activity);
+
+        $route = $activity->route ?? [];
+        if (empty($route)) {
+            abort(Response::HTTP_NOT_FOUND, 'Brak śladu GPS do eksportu.');
+        }
+
+        $gpx = $this->generateGpx($activity, $route);
+
+        return response($gpx, Response::HTTP_OK, [
+            'Content-Type' => 'application/gpx+xml',
+            'Content-Disposition' => 'attachment; filename="activity-'.$activity->id.'.gpx"',
+        ]);
+    }
+
     protected function authorizeOwnership(int $userId, Activity $activity): void
     {
         abort_unless($activity->user_id === $userId, Response::HTTP_FORBIDDEN);
+    }
+
+    /**
+     * @param array<int, array{lat: float, lng: float}> $route
+     */
+    protected function generateGpx(Activity $activity, array $route): string
+    {
+        $startTime = $activity->start_time ?? Carbon::now();
+
+        $trkPoints = collect($route)->values()->map(function (array $point, int $index) use ($startTime): string {
+            $time = $startTime->copy()->addSeconds($index)->toIso8601String();
+            $lat = $point['lat'];
+            $lng = $point['lng'];
+
+            return "        <trkpt lat=\"{$lat}\" lon=\"{$lng}\"><time>{$time}</time></trkpt>";
+        })->implode("\n");
+
+        $gpx = <<<GPX
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="MiniStrava API" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>{$activity->title}</name>
+    <time>{$startTime->toIso8601String()}</time>
+  </metadata>
+  <trk>
+    <name>{$activity->title}</name>
+    <type>{$activity->type}</type>
+    <trkseg>
+{$trkPoints}
+    </trkseg>
+  </trk>
+</gpx>
+GPX;
+
+        return $gpx;
     }
 }
