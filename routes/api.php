@@ -21,6 +21,8 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
     Route::get('/activities/{activity}/export.gpx', [ActivityController::class, 'export']);
 
     Route::get('/feed', [\App\Http\Controllers\FeedController::class, 'index']);
+    Route::get('/stats/me', [\App\Http\Controllers\UserStatsController::class, 'me']);
+    Route::get('/stats/ranking', [\App\Http\Controllers\UserStatsController::class, 'ranking']);
 
     Route::get('/friends', [\App\Http\Controllers\FriendController::class, 'friends']);
     Route::get('/friends/requests', [\App\Http\Controllers\FriendController::class, 'requests']);

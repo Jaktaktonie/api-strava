@@ -1182,6 +1182,92 @@
                     }
                 ]
             }
+        },
+        "/api/stats/me": {
+            "get": {
+                "tags": [
+                    "Stats"
+                ],
+                "summary": "Personal stats for period",
+                "operationId": "d4697d380b82684b8a06bed124202644",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "week",
+                                "month"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Stats",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserStats"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/stats/ranking": {
+            "get": {
+                "tags": [
+                    "Stats"
+                ],
+                "summary": "Ranking by distance for period",
+                "operationId": "7986da67dc60ca2a392ff983f433e8c6",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "week",
+                                "month"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ranking",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ranking": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/RankingEntry"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1525,6 +1611,60 @@
                     }
                 },
                 "type": "object"
+            },
+            "UserStats": {
+                "properties": {
+                    "period": {
+                        "type": "string"
+                    },
+                    "workouts": {
+                        "type": "integer"
+                    },
+                    "distance_km": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "duration_seconds": {
+                        "type": "integer"
+                    },
+                    "avg_speed_kmh": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "RankingEntry": {
+                "properties": {
+                    "position": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "avatar_url": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "distance_km": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "workouts": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -1548,6 +1688,10 @@
         {
             "name": "Social",
             "description": "Social"
+        },
+        {
+            "name": "Stats",
+            "description": "Stats"
         }
     ]
 }
