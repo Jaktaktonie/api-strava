@@ -41,3 +41,14 @@ Thumbs.db
 .env.*
 !.env.example
 *.key
+
+
+
+!/storage/framework/.gitignore
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/testing/.gitignore
+!/storage/framework/views/.gitignore
+
+=======
+
