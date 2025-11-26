@@ -23,8 +23,21 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $firstName = fake()->firstName();
+        $lastName = fake()->lastName();
+
         return [
-            'name' => fake()->name(),
+            'name' => "{$firstName} {$lastName}",
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'birth_date' => fake()->dateTimeBetween('-60 years', '-16 years')->format('Y-m-d'),
+            'gender' => fake()->randomElement(['male', 'female', 'other']),
+            'height_cm' => fake()->numberBetween(150, 195),
+            'weight_kg' => fake()->numberBetween(50, 110),
+            'avatar_url' => fake()->imageUrl(),
+            'bio' => fake()->sentence(12),
+            'locale' => fake()->randomElement(['pl', 'en']),
+            'timezone' => fake()->timezone(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
