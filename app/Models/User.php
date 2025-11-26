@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'bio',
         'locale',
         'timezone',
+        'role',
         'email',
         'password',
     ];
@@ -55,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'birth_date' => 'date',
             'password' => 'hashed',
+            'role' => 'string',
         ];
     }
 }
