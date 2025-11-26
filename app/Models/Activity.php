@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\ActivityComment;
+use App\Models\ActivityLike;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Activity extends Model
 {
@@ -44,5 +47,15 @@ class Activity extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(ActivityLike::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(ActivityComment::class);
     }
 }

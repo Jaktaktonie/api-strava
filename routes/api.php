@@ -18,8 +18,22 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
     Route::put('/profile', [ProfileController::class, 'update']);
 
     Route::apiResource('activities', ActivityController::class);
-
     Route::get('/activities/{activity}/export.gpx', [ActivityController::class, 'export']);
+
+    Route::get('/feed', [\App\Http\Controllers\FeedController::class, 'index']);
+
+    Route::get('/friends', [\App\Http\Controllers\FriendController::class, 'friends']);
+    Route::get('/friends/requests', [\App\Http\Controllers\FriendController::class, 'requests']);
+    Route::post('/friends/invite', [\App\Http\Controllers\FriendController::class, 'invite']);
+    Route::post('/friends/{friendRequest}/accept', [\App\Http\Controllers\FriendController::class, 'accept']);
+    Route::post('/friends/{friendRequest}/reject', [\App\Http\Controllers\FriendController::class, 'reject']);
+
+    Route::post('/activities/{activity}/kudos', [\App\Http\Controllers\KudosController::class, 'store']);
+    Route::delete('/activities/{activity}/kudos', [\App\Http\Controllers\KudosController::class, 'destroy']);
+
+    Route::get('/activities/{activity}/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+    Route::post('/activities/{activity}/comments', [\App\Http\Controllers\CommentController::class, 'store']);
+
 
     Route::get('/me', function (Request $request) {
         return new UserResource($request->user());
