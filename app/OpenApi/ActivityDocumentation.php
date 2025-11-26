@@ -137,12 +137,39 @@ class ActivityDocumentation
     public function destroy()
     {
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/activities/{id}/export.gpx",
+     *     summary="Export activity route as GPX",
+     *     tags={"Activities"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="GPX file",
+     *         @OA\MediaType(
+     *             mediaType="application/gpx+xml"
+     *         )
+     *     ),
+     *     @OA\Response(response=404, description="No route to export")
+     * )
+     */
+    public function export()
+    {
+    }
+
 }
 
-/**
- * @OA\Schema(
- *     schema="ActivityResource",
- *     type="object",
+    /**
+     * @OA\Schema(
+     *     schema="ActivityResource",
+     *     type="object",
  *     @OA\Property(property="id", type="integer"),
  *     @OA\Property(property="user_id", type="integer"),
  *     @OA\Property(property="title", type="string"),
