@@ -32,6 +32,7 @@ class UserResource extends JsonResource
             'email_verified_at' => optional($this->email_verified_at)?->toDateTimeString(),
             'created_at' => optional($this->created_at)?->toDateTimeString(),
             'updated_at' => optional($this->updated_at)?->toDateTimeString(),
+            'activities_count' => $this->when(isset($this->activities_count), (int) $this->activities_count),
         ];
     }
 }

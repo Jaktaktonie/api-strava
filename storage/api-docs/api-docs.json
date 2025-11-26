@@ -12,6 +12,484 @@
         }
     ],
     "paths": {
+        "/api/activities": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "List authenticated user activities",
+                "operationId": "aa63ced9aa211a2bd327dec5700b3411",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by activity type (run/ride/walk)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Filter by start date (ISO 8601)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Filter by end date (ISO 8601)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated activity list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ActivityResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Store new activity",
+                "operationId": "88cf90e621d49f15f1f91881817d97cf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivityRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created activity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActivityResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/activities/{id}": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Show activity details",
+                "operationId": "8bb4949e354ea09599756917bb168d46",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Activity data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActivityResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Update activity",
+                "operationId": "47cb657d25af1302f6a2ff304eeaa5fe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivityRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated activity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActivityResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Delete activity",
+                "operationId": "ba75ea315c3b78226ffed7fa9071a025",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "List users for admin panel",
+                "operationId": "b65aac8f1de6c95e18cba8dbef65d1b0",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Filter by name or email",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Filter by role",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "registered_from",
+                        "in": "query",
+                        "description": "Registered from (date)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "registered_to",
+                        "in": "query",
+                        "description": "Registered to (date)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users/{id}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Show user details with recent activities",
+                "operationId": "d344af3de4acac2b9fd197c89bf1d065",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        },
+                                        "recent_activities": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ActivityResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/activities": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "List activities with admin filters",
+                "operationId": "3a4e9f57a267ae52cd0c3f4fbe143928",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "min_distance",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "max_distance",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated activities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ActivityResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/activities/{id}": {
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Delete activity as admin",
+                "operationId": "7398e34ccf8f2ed3674fc28938b3989f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/stats": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Global statistics for admin dashboard",
+                "operationId": "1b23dd45ae75369bd91965c54a251c9b",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "week, month or empty for totals",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "week",
+                                "month"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistics payload",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AdminStats"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/auth/register": {
             "post": {
                 "tags": [
@@ -350,6 +828,210 @@
     },
     "components": {
         "schemas": {
+            "ActivityResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "run",
+                            "ride",
+                            "walk"
+                        ]
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "duration_seconds": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "distance_meters": {
+                        "type": "integer"
+                    },
+                    "distance_km": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "avg_speed_kmh": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "avg_pace": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "route": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lat": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "lng": {
+                                    "type": "number",
+                                    "format": "float"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "photo_url": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "gpx_path": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ActivityRequest": {
+                "required": [
+                    "title",
+                    "type",
+                    "start_time",
+                    "distance_meters"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Morning Run"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "run",
+                            "ride",
+                            "walk"
+                        ],
+                        "example": "run"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-11-22T08:30:00Z"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "duration_seconds": {
+                        "type": "integer",
+                        "example": 1800
+                    },
+                    "distance_meters": {
+                        "type": "integer",
+                        "example": 5000
+                    },
+                    "avg_speed_kmh": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 10.2
+                    },
+                    "avg_pace": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 5.5
+                    },
+                    "route": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lat": {
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 52.1
+                                },
+                                "lng": {
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 21
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Evening tempo workout",
+                        "nullable": true
+                    },
+                    "photo_url": {
+                        "type": "string",
+                        "example": "https://cdn.mini-strava.dev/run.jpg",
+                        "nullable": true
+                    },
+                    "gpx_path": {
+                        "type": "string",
+                        "example": "activities/1234.gpx",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AdminStats": {
+                "properties": {
+                    "period": {
+                        "type": "string"
+                    },
+                    "users_total": {
+                        "type": "integer"
+                    },
+                    "activities_total": {
+                        "type": "integer"
+                    },
+                    "distance_total_km": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "period_activities": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "period_distance_km": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "UserResource": {
                 "properties": {
                     "id": {
@@ -421,6 +1103,14 @@
         }
     },
     "tags": [
+        {
+            "name": "Activities",
+            "description": "Activities"
+        },
+        {
+            "name": "Admin",
+            "description": "Admin"
+        },
         {
             "name": "Auth",
             "description": "Auth"
