@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $adminEmail = env('ADMIN_EMAIL', 'admin@ministrava.dev');
         $adminPassword = env('ADMIN_PASSWORD', 'Admin123!');
 
-        User::updateOrCreate(
+        $admin = User::updateOrCreate(
             ['email' => $adminEmail],
             [
                 'first_name' => 'MiniStrava',
@@ -35,7 +36,7 @@ class DatabaseSeeder extends Seeder
         $testerEmail = env('TEST_USER_EMAIL', 'tester@ministrava.dev');
         $testerPassword = env('TEST_USER_PASSWORD', 'User123!');
 
-        User::updateOrCreate(
+        $tester = User::updateOrCreate(
             ['email' => $testerEmail],
             [
                 'first_name' => 'Test',
@@ -46,5 +47,15 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make($testerPassword),
             ]
         );
+
+        $sampleUsers = User::factory()->count(3)->create();
+
+        $seededUsers = collect([$admin, $tester])->filter()->merge($sampleUsers);
+
+        $seededUsers->each(function (User $user): void {
+            Activity::factory()->count(2)->create([
+                'user_id' => $user->id,
+            ]);
+        });
     }
 }
