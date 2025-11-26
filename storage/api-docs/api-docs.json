@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000",
+            "url": "http://127.0.0.1:8000",
             "description": "Primary API server"
         }
     ],
@@ -1183,6 +1183,177 @@
                 ]
             }
         },
+        "/api/blocks": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "List blocked users",
+                "operationId": "43380ab10b00d2199f73a7bd3eacea93",
+                "responses": {
+                    "200": {
+                        "description": "Blocked users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Block a user",
+                "operationId": "a3fa814689884cbe9401530fff3c492d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User blocked"
+                    },
+                    "200": {
+                        "description": "Already blocked"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/blocks/{id}": {
+            "delete": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Unblock user",
+                "operationId": "1018c98108fe0fc1f2ec96ad1761ba81",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User unblocked"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/reports": {
+            "post": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Report user or activity",
+                "operationId": "97622330965960bebf386bb3950e488c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "target_id",
+                                    "reason"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "user",
+                                            "activity"
+                                        ],
+                                        "example": "user"
+                                    },
+                                    "target_id": {
+                                        "type": "integer",
+                                        "example": 12
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "Spam / nadużycie"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Report created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "open"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/stats/me": {
             "get": {
                 "tags": [
@@ -1666,6 +1837,14 @@
                 },
                 "type": "object"
             }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Wpisz token w formacie: Bearer {token}",
+                "name": "Authorization",
+                "in": "header"
+            }
         }
     },
     "tags": [
@@ -1692,6 +1871,11 @@
         {
             "name": "Stats",
             "description": "Stats"
+        }
+    ],
+    "security": [
+        {
+            "sanctum": []
         }
     ]
 }

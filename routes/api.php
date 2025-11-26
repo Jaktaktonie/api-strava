@@ -4,6 +4,8 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
 use App\Http\Controllers\Admin\StatsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\AbuseReportController;
+use App\Http\Controllers\BlockController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -36,6 +38,11 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
     Route::get('/activities/{activity}/comments', [\App\Http\Controllers\CommentController::class, 'index']);
     Route::post('/activities/{activity}/comments', [\App\Http\Controllers\CommentController::class, 'store']);
 
+    Route::get('/blocks', [BlockController::class, 'index']);
+    Route::post('/blocks', [BlockController::class, 'store']);
+    Route::delete('/blocks/{user}', [BlockController::class, 'destroy']);
+
+    Route::post('/reports', [AbuseReportController::class, 'store']);
 
     Route::get('/me', function (Request $request) {
         return new UserResource($request->user());

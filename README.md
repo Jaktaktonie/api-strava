@@ -2,6 +2,15 @@
 
 Backend serwujący dane dla aplikacji mobilnej Flutter oraz panelu administracyjnego. Udostępnia rejestrację/logowanie, zarządzanie profilem i dokumentację OpenAPI, stanowiąc bazę do dalszej rozbudowy (aktywności, feed, ranking, eksport GPX).
 
+## Ostatnie usprawnienia
+- Feed ładuje po 2 najnowsze komentarze na aktywność (wcześniej globalny limit 2 ucinał większość wpisów).
+- Zaproszenia do znajomych są odporne na duplikaty; odwrotne zaproszenie jest akceptowane automatycznie, a istniejąca relacja nie może być nadpisana.
+- Kudosy i statystyki liczone są pojedynczymi zapytaniami, a własnych aktywności nie można już „lajkować”.
+- Walidacja strefy czasowej (rejestracja/profil) pilnuje poprawnych wartości w bazie.
+- Rejestracja wysyła e-mail powitalny i automatyczne przypomnienie o weryfikacji, a logowanie/uwierzytelnienie jest odporniejsze na różne formaty e-maili.
+- Swagger ma włączony schemat `sanctum` (nagłówek `Authorization: Bearer {token}`) i zapamiętuje autoryzację; ustaw `L5_SWAGGER_CONST_HOST` jeśli API stoi pod innym adresem niż `APP_URL`.
+- Dodano blokowanie użytkowników (`GET/POST/DELETE /api/blocks`) – feed i zaproszenia respektują blokady; nowe zgłoszenia nadużyć (`POST /api/reports`) obejmują użytkowników i aktywności.
+
 ## Stos technologiczny
 - PHP 8.2+, Laravel 12, Sanctum (tokeny) i Breeze API (auth).
 - MySQL/MariaDB jako baza danych.
@@ -19,7 +28,12 @@ Backend serwujący dane dla aplikacji mobilnej Flutter oraz panelu administracyj
 ## Konta testowe (można nadpisać w `.env`)
 - Admin: `admin@ministrava.dev / Admin123!` – rola `admin`, do logowania w panelu.
 - Użytkownik: `tester@ministrava.dev / User123!` – zwykłe konto do testów mobilki.
-- Seeder dorzuca też trzech dodatkowych użytkowników z kilkoma przykładowymi aktywnościami, żeby feed/testy miały realne dane.
+- Seeder dorzuca pięciu dodatkowych użytkowników z aktywnościami i interakcjami (przyjaźnie, polubienia, komentarze, jedna blokada); domyślne hasło `Sample123!`:
+  - `ala@ministrava.dev / Sample123!`
+  - `bartek@ministrava.dev / Sample123!`
+  - `cleo@ministrava.dev / Sample123!`
+  - `dawid@ministrava.dev / Sample123!`
+  - `ewa@ministrava.dev / Sample123!`
 
 ## Endpointy dostępne obecnie (`/api`)
 - `POST /auth/register` – tworzy nowe konto.
