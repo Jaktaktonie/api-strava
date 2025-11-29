@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string', 'email', 'lowercase'],
             'password' => ['required', 'string'],
         ];
     }
@@ -81,5 +81,14 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($email = $this->input('email')) {
+            $this->merge([
+                'email' => Str::lower(trim($email)),
+            ]);
+        }
     }
 }

@@ -183,6 +183,93 @@ class SocialDocumentation
     public function commentsStore()
     {
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/blocks",
+     *     summary="List blocked users",
+     *     tags={"Social"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Blocked users",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/UserResource")
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function blocksIndex()
+    {
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/blocks",
+     *     summary="Block a user",
+     *     tags={"Social"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"user_id"},
+     *             @OA\Property(property="user_id", type="integer", example=5)
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="User blocked"),
+     *     @OA\Response(response=200, description="Already blocked")
+     * )
+     */
+    public function blocksStore()
+    {
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/blocks/{id}",
+     *     summary="Unblock user",
+     *     tags={"Social"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="User unblocked")
+     * )
+     */
+    public function blocksDestroy()
+    {
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/reports",
+     *     summary="Report user or activity",
+     *     tags={"Social"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"type","target_id","reason"},
+     *             @OA\Property(property="type", type="string", enum={"user","activity"}, example="user"),
+     *             @OA\Property(property="target_id", type="integer", example=12),
+     *             @OA\Property(property="reason", type="string", maxLength=500, example="Spam / nadużycie")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Report created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="status", type="string", example="open")
+     *         )
+     *     )
+     * )
+     */
+    public function reportsStore()
+    {
+    }
 }
 
 /**

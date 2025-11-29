@@ -21,14 +21,19 @@ class UserStatsController extends Controller
             $query->where('start_time', '<=', $to);
         }
 
-        $count = $query->count();
-        $totalDistance = $query->sum('distance_meters');
-        $totalDuration = $query->sum('duration_seconds');
+        $stats = (clone $query)
+            ->selectRaw('COUNT(*) as workouts')
+            ->selectRaw('COALESCE(SUM(distance_meters), 0) as distance_meters')
+            ->selectRaw('COALESCE(SUM(duration_seconds), 0) as duration_seconds')
+            ->first();
+
+        $totalDistance = (float) ($stats->distance_meters ?? 0);
+        $totalDuration = (int) ($stats->duration_seconds ?? 0);
         $avgSpeed = $totalDuration > 0 ? round(($totalDistance / 1000) / ($totalDuration / 3600), 2) : null;
 
         return response()->json([
             'period' => $label,
-            'workouts' => $count,
+            'workouts' => (int) ($stats->workouts ?? 0),
             'distance_km' => round($totalDistance / 1000, 2),
             'duration_seconds' => (int) $totalDuration,
             'avg_speed_kmh' => $avgSpeed,

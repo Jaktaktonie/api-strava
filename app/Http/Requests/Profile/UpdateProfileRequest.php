@@ -26,7 +26,7 @@ class UpdateProfileRequest extends FormRequest
             'avatar_url' => ['nullable', 'string', 'max:2048'],
             'bio' => ['nullable', 'string', 'max:1000'],
             'locale' => ['nullable', 'string', 'in:pl,en'],
-            'timezone' => ['nullable', 'string', 'max:60'],
+            'timezone' => ['nullable', 'timezone'],
         ];
     }
 }
