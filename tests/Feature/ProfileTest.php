@@ -32,7 +32,8 @@ class ProfileTest extends TestCase
 
         $this->assertNotNull($path);
         Storage::disk('public')->assertExists($path);
-        $response->assertJsonPath('data.avatar_url', Storage::disk('public')->url($path));
+        $expectedUrl = rtrim(config('app.url'), '/').'/api/avatars/'.$user->id;
+        $response->assertJsonPath('data.avatar_url', $expectedUrl);
     }
 
     public function test_user_can_clear_avatar(): void
@@ -48,10 +49,10 @@ class ProfileTest extends TestCase
 
         $this->putJson('/api/profile', [
             'avatar_url' => null,
-        ])->assertOk()->assertJsonPath('data.avatar_url', null);
+        ])->assertOk()->assertJsonPath('data.avatar_url', rtrim(config('app.url'), '/').'/api/avatars/'.$user->id);
 
         $user->refresh();
-        $this->assertNull($user->getRawOriginal('avatar_url'));
+        $this->assertSame($path, $user->getRawOriginal('avatar_url'));
         Storage::disk('public')->assertMissing($path);
     }
 }
