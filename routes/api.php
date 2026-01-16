@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ActivityPhotoController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
 use App\Http\Controllers\Admin\StatsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AbuseReportController;
+use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Resources\UserResource;
@@ -15,11 +17,14 @@ Route::prefix('auth')->group(function (): void {
     require __DIR__.'/auth.php';
 });
 
+Route::get('/avatars/{user}', [AvatarController::class, 'show'])->name('avatars.show');
+
 Route::middleware(['auth:sanctum'])->group(function (): void {
     Route::get('/profile', [ProfileController::class, 'show']);
     Route::put('/profile', [ProfileController::class, 'update']);
 
     Route::apiResource('activities', ActivityController::class);
+    Route::get('/activities/{activity}/photo', [ActivityPhotoController::class, 'show']);
     Route::get('/activities/{activity}/export.gpx', [ActivityController::class, 'export']);
 
     Route::get('/feed', [\App\Http\Controllers\FeedController::class, 'index']);
@@ -28,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
 
     Route::get('/friends', [\App\Http\Controllers\FriendController::class, 'friends']);
     Route::get('/friends/requests', [\App\Http\Controllers\FriendController::class, 'requests']);
+    Route::get('/users/search', [\App\Http\Controllers\FriendController::class, 'search']);
     Route::post('/friends/invite', [\App\Http\Controllers\FriendController::class, 'invite']);
     Route::post('/friends/{friendRequest}/accept', [\App\Http\Controllers\FriendController::class, 'accept']);
     Route::post('/friends/{friendRequest}/reject', [\App\Http\Controllers\FriendController::class, 'reject']);
